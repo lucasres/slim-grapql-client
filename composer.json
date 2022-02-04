@@ -1,0 +1,11 @@
+{
+    "name": "lucasres/slim-graphql",
+    "description": "Client for graphql without dependency",
+    "autoload": {
+        "psr-4": {
+            "SlimGraphql\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
