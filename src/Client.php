@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SlimGraphqlClient;
+namespace SlimGraphql;
 
 use Exception;
 use SlimGraphql\Payload;
@@ -13,21 +13,15 @@ class Client {
      * @var string
      */
     private $url;
-
-    /**
-     * @var Payload
-     */
-    private $payload;
-
+    
     /**
      * @var array
      */
     private $config;
 
-    public function __construct(string $url, Payload $payload, array $config = [])
+    public function __construct(string $url, array $config = [])
     {
         $this->url = $url;
-        $this->payload = $payload;
         $this->config = $config;
     }
 
@@ -46,7 +40,7 @@ class Client {
         return $this->config;
     }
 
-    public function makeRequest(array $config = []): ResponseGraphql
+    public function makeRequest(Payload $payload, array $config = []): ResponseGraphql
     {
         $mergedConfig = $config + $this->getConfig();
 
@@ -74,7 +68,7 @@ class Client {
         }
 
         if ($statusCode >= 400) {
-            throw new Exception("Graphql request status more than 400");
+            throw new Exception("Graphql request status {$statusCode}:  {$response}");
         }
 
         return ResponseGraphql::create(

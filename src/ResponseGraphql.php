@@ -30,4 +30,9 @@ class ResponseGraphql {
             $response['data']
         );
     }
+
+    public function getData(): array 
+    {
+        return $this->data;
+    }
 }
