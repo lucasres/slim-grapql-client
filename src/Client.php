@@ -40,15 +40,15 @@ class Client {
         return $this->config;
     }
 
-    public function makeRequest(Payload $payload, array $config = []): ResponseGraphql
+    public function makeRequest(Payload $payload, array $customConfig = []): ResponseGraphql
     {
-        $mergedConfig = $config + $this->getConfig();
-
-        $curl = curl_init();
+        $mergedConfig = $customConfig + $this->getConfig();
 
         $defaultHeaders = [
             'Content-Type: application/json'
         ];
+
+        $curl = curl_init();
 
         curl_setopt_array(
             $curl,
@@ -72,7 +72,11 @@ class Client {
             throw new Exception("Graphql request error: {$error}");
         }
 
-        if ($statusCode >= 400) {
+        if ($statusCode === 400) {
+            throw new GraphqlException(json_decode($response, true));
+        }
+
+        if ($statusCode > 400) {
             throw new Exception("Graphql request status {$statusCode}:  {$response}");
         }
 
