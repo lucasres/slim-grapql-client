@@ -23,5 +23,5 @@ try{
   echo var_dump($response->getData());
 } catch(GraphqlException $e) {
   // echo var_dump($e->getErrors());
-  echo var_dump($e->getErrors());
+  echo var_dump($e->getMessage());
 }

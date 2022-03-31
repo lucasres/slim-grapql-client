@@ -28,7 +28,13 @@ class GraphqlException extends Exception
             $this->errors[] = $error;
         }
 
-        parent::__construct("Request returns with error", $code, $previous);
+        $msg = $this->buildMessage();
+
+        parent::__construct(
+            "Request returns with error: {$msg}",
+            $code,
+            $previous
+        );
     }
 
     /**
@@ -37,5 +43,13 @@ class GraphqlException extends Exception
     public function getErrors(): array
     {
         return $this->errors;
+    }
+
+    public function buildMessage(): string
+    {
+        return join(
+            "; ",
+            array_map(fn (ErrorGraphql $e) => $e->getMessage(), $this->getErrors())
+        );
     }
 }
