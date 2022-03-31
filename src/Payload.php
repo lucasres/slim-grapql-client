@@ -36,4 +36,12 @@ class Payload  {
     {
         return http_build_query($this->getVariables());
     }
+
+    public function serialize(): string
+    {
+        return json_encode([
+            'query'     => $this->getQuery(),
+            'variables' => $this->getVariables(),    
+        ]);
+    }
 }

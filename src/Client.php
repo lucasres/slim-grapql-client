@@ -46,16 +46,21 @@ class Client {
 
         $curl = curl_init();
 
+        $defaultHeaders = [
+            'Content-Type: application/json'
+        ];
+
         curl_setopt_array(
             $curl,
             [
-                CURLOPT_URL => $this->getUrl(),
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_TIMEOUT => $mergedConfig['timeout'] ?? 30,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_HTTPHEADER => $mergedConfig['headers'] ?? []
+                CURLOPT_URL             => $this->getUrl(),
+                CURLOPT_RETURNTRANSFER  => true,
+                CURLOPT_TIMEOUT         => $mergedConfig['timeout'] ?? 30,
+                CURLOPT_FOLLOWLOCATION  => true,
+                CURLOPT_HTTP_VERSION    => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST   => 'POST',
+                CURLOPT_HTTPHEADER      => $mergedConfig['headers'] ?? $defaultHeaders,
+                CURLOPT_POSTFIELDS      => $payload->serialize(),
             ]
         );
 

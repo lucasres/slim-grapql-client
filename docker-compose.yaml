@@ -1,7 +1,0 @@
-version: "3"
-services:
-    slimgraphql:
-        build: .
-        volumes: 
-            - .:/app
-        command: sleep 60m

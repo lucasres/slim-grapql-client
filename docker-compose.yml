@@ -1,0 +1,9 @@
+version: "3.5"
+
+services:
+    dev:
+        container_name: slimgraphql-php
+        build: .
+        volumes: 
+            - .:/app
+        command: "php examples/request.php"
